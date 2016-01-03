@@ -21,7 +21,7 @@ Extract Video ID from a video url
 
 ## Usage
 
-    from extract_video_id import yotube
+    from extract_video_id import youtube
     
     url = 'http://www.youtube.com/embed/_lOT2p_FCvA'
     
