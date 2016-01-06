@@ -4,7 +4,9 @@
 Extract Video ID from a video url
 
 ### Examples of URLs
+
 ####  Valid
+
     *  'http://youtu.be/_lOT2p_FCvA',
     *  'www.youtube.com/watch?v=_lOT2p_FCvA&feature=feedu',
     *  'http://www.youtube.com/embed/_lOT2p_FCvA',
@@ -13,6 +15,7 @@ Extract Video ID from a video url
     *  'youtube.com/watch?v=_lOT2p_FCvA',
       
 ####  Invalid:
+
     *  'youtu.be/watch?v=_lOT2p_FCvA'  (because Youtube don't give any url like this
     
 ## Install
@@ -22,9 +25,7 @@ Extract Video ID from a video url
 ## Usage
 
     from extract_video_id import youtube
-    
     url = 'http://www.youtube.com/embed/_lOT2p_FCvA'
-    
     video_id = youtube.get_video_id(url)
 
 
