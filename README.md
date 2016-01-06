@@ -7,26 +7,38 @@ Extract Video ID from a video url
 
 ####  Valid
 
-    *  'http://youtu.be/_lOT2p_FCvA',
-    *  'www.youtube.com/watch?v=_lOT2p_FCvA&feature=feedu',
-    *  'http://www.youtube.com/embed/_lOT2p_FCvA',
-    *  'http://www.youtube.com/v/_lOT2p_FCvA?version=3&amp;hl=en_US',
-    *  'https://www.youtube.com/watch?v=rTHlyTphWP0&index=6&list=PLjeDyYvG6-40qawYNR4juzvSOg-ezZ2a6',
-    *  'youtube.com/watch?v=_lOT2p_FCvA',
+ *  'http://youtu.be/_lOT2p_FCvA',
+ *  'www.youtube.com/watch?v=_lOT2p_FCvA&feature=feedu',
+ *  'http://www.youtube.com/embed/_lOT2p_FCvA',
+ *  'http://www.youtube.com/v/_lOT2p_FCvA?version=3&amp;hl=en_US',
+ *  'https://www.youtube.com/watch?v=rTHlyTphWP0&index=6&list=PLjeDyYvG6-40qawYNR4juzvSOg-ezZ2a6',
+ *  'youtube.com/watch?v=_lOT2p_FCvA',
       
 ####  Invalid:
 
-    *  'youtu.be/watch?v=_lOT2p_FCvA'  (because Youtube don't give any url like this
+ * 'youtu.be/watch?v=_lOT2p_FCvA'  [ because Youtube don't give any url like this ]
     
 ## Install
+
+### Directly from source
     
     pip install git+https://github.com/kmonsoor/extract-video-id.git
 
+
 ## Usage
 
-    from extract_video_id import youtube
-    url = 'http://www.youtube.com/embed/_lOT2p_FCvA'
-    video_id = youtube.get_video_id(url)
+    >>> from online_video import OnlineVideo
+    >>> ov = OnlineVideo('http://www.youtube.com/embed/_lOT2p_FCvA')
+    >>> ov.get_video_id()
+    '_lOT2p_FCvA'
+    
+    >>> ov.get_embed_code()
+    "<div class='embed-container'><iframe src='http://www.youtube.com/embed/_lOT2p_FCvA'            'frameborder='0'allowfullscreen></iframe></div>"
+    
+    >>> ov = OnlineVideo('https://vimeo.com/groups/animation/videos/150618894/')
+    >>> ov.get_embed_code()
+    "<div class='embed-container'> <iframe src='http://player.vimeo.com/video/150618894' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>"
+    
 
 
 ## To-do
@@ -37,8 +49,8 @@ Extract Video ID from a video url
 
 ## Contributors
 
- * Intial version :  [Mikhail Kashkin](http://stackoverflow.com/users/85739/mikhail-kashkin)
- * Extension & projectization : [Khaled Monsoor](http://github.com/kmonsoor)
+ * Seed idea :  A [StackOverflow answer](http://stackoverflow.com/a/7936523) by [Mikhail Kashkin](http://stackoverflow.com/users/85739/mikhail-kashkin)
+ * Author : [Khaled Monsoor](http://github.com/kmonsoor)
  * 
 
 Please try to contribute by submitting more video sites as well as their different link formats. You can submit pull-requests or by creating issue.
