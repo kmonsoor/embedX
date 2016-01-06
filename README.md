@@ -33,7 +33,7 @@ Extract Video ID from a video url
     '_lOT2p_FCvA'
     
     >>> ov.get_embed_code()
-    "<div class='embed-container'><iframe src='http://www.youtube.com/embed/_lOT2p_FCvA'            'frameborder='0'allowfullscreen></iframe></div>"
+    "<div class='embed-container'><iframe src='http://www.youtube.com/embed/_lOT2p_FCvA' 'frameborder='0'allowfullscreen></iframe></div>"
     
     >>> ov = OnlineVideo('https://vimeo.com/groups/animation/videos/150618894/')
     >>> ov.get_embed_code()
@@ -49,7 +49,7 @@ Extract Video ID from a video url
 
 ## Contributors
 
- * Seed idea :  A [StackOverflow answer](http://stackoverflow.com/a/7936523) by [Mikhail Kashkin](http://stackoverflow.com/users/85739/mikhail-kashkin)
+ * Seed idea :  [A StackOverflow answer](http://stackoverflow.com/a/7936523) by [Mikhail Kashkin](http://stackoverflow.com/users/85739/mikhail-kashkin)
  * Author : [Khaled Monsoor](http://github.com/kmonsoor)
  * 
 
