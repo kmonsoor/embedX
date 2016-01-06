@@ -6,7 +6,6 @@ setup(
         name='extract-video-id',
         version='0.0.3',
         packages=find_packages(),
-        package_dir={'online_video'},
         url='https://github.com/kmonsoor/extract-video-id',
         license='MIT',
         author='Khaled Monsoor',
