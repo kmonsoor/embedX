@@ -1,9 +1,9 @@
 from urlparse import urlparse, parse_qs
 
 
-class OnlineVideo(object):
+class OnlineContent(object):
     url = None
-    video_id = None
+    content_uid = None
     instance = None
 
     # these templates must be defined by providing subclasses
@@ -18,42 +18,42 @@ class OnlineVideo(object):
             _hosts = provider_obj.get_hostnames()
             if any([x for x in _hosts if x in url]):
                 self.instance = provider_obj(self.url)
-                self.video_id = self.get_video_id()
+                self.content_uid = self.get_content_uid()
 
     def get_provider(self):
         return self.instance.__str__()
 
-    def get_video_id(self):
-        """Returns the unique ID extracted from the link of the video
+    def get_content_uid(self):
+        """Returns the unique ID extracted from the link of the content
         """
-        self.video_id = self.instance.extract_id()
-        return self.video_id
+        self.content_uid = self.instance.extract_id()
+        return self.content_uid
 
     def get_embed_code(self):
-        if self.video_id is None:
+        if self.content_uid is None:
             self.instance.extract_id()
         if len(self.instance.EMBED_SCRIPT) > 0:
-            return self.instance.EMBED_SCRIPT % ({'VIDEO_ID': self.video_id})
+            return self.instance.EMBED_SCRIPT % ({'content_uid': self.content_uid})
         else:
             raise NotImplementedError
 
     def get_clean_link(self):
-        if self.video_id is None:
+        if self.content_uid is None:
             self.instance.extract_id()
         if len(self.instance.LINK_TEMPLATE) > 0:
-            return self.instance.LINK_TEMPLATE % ({'VIDEO_ID': self.video_id})
+            return self.instance.LINK_TEMPLATE % ({'content_uid': self.content_uid})
         else:
             raise NotImplementedError
 
     def extract_id(self):
-        """Extract the unique ID from the URL link, set it to `self.video_id`, and return the value.
+        """Extract the unique ID from the URL link, set it to `self.content_uid`, and return the value.
         This method must be implemented by sub-class.
-        :return: string ID of the video
+        :return: string ID of the content
         """
         raise NotImplementedError
 
     def check_if_alive(self):
-        """Check if the video is available on the host server. Returns `True` if available, else `False`.
+        """Check if the content is available on the host server. Returns `True` if available, else `False`.
         This method is `lazy`-evaluated or only executes when called.
         :rtype: bool
         """
@@ -61,7 +61,7 @@ class OnlineVideo(object):
 
         if not len(self.instance.STATUS_LINK):
             raise NotImplementedError
-        url = self.instance.STATUS_LINK % ({'VIDEO_ID': self.video_id})
+        url = self.instance.STATUS_LINK % ({'content_uid': self.content_uid})
         try:
             response = urlopen(url)
         except (HTTPError, URLError):
@@ -72,12 +72,12 @@ class OnlineVideo(object):
             return True if response.code == 200 else False
 
 
-class YouTube(OnlineVideo):
+class YouTube(OnlineContent):
     # hostnames = ['youtube', 'youtu.be']
-    EMBED_SCRIPT = '''<div class='embed-container'><iframe src='http://www.youtube.com/embed/%(VIDEO_ID)s'
+    EMBED_SCRIPT = '''<div class='embed-container'><iframe src='http://www.youtube.com/embed/%(content_uid)s'
                       'frameborder='0'allowfullscreen></iframe></div>'''
-    STATUS_LINK = '''http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%(VIDEO_ID)s&format=json'''
-    LINK_TEMPLATE = '''https://www.youtube.com/watch?v=%(VIDEO_ID)s'''
+    STATUS_LINK = '''http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%(content_uid)s&format=json'''
+    LINK_TEMPLATE = '''https://www.youtube.com/watch?v=%(content_uid)s'''
 
     @staticmethod
     def get_hostnames():
@@ -87,7 +87,7 @@ class YouTube(OnlineVideo):
         self.url = url
 
     def extract_id(self):
-        """Returns Video_ID extracting from the given url of Youtube
+        """Returns content_uid extracting from the given url of Youtube
 
         Examples of URLs:
           Valid:
@@ -118,10 +118,10 @@ class YouTube(OnlineVideo):
             raise ValueError
 
 
-class Vimeo(OnlineVideo):
-    LINK_TEMPLATE = '''https://vimeo.com/%(VIDEO_ID)s'''
-    STATUS_LINK = '''https://vimeo.com/api/oembed.json?url=https://vimeo.com/%(VIDEO_ID)s'''
-    EMBED_SCRIPT = '''<div class='embed-container'> <iframe src='http://player.vimeo.com/video/%(VIDEO_ID)s' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>'''
+class Vimeo(OnlineContent):
+    LINK_TEMPLATE = '''https://vimeo.com/%(content_uid)s'''
+    STATUS_LINK = '''https://vimeo.com/api/oembed.json?url=https://vimeo.com/%(content_uid)s'''
+    EMBED_SCRIPT = '''<div class='embed-container'> <iframe src='http://player.vimeo.com/video/%(content_uid)s' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>'''
 
     @staticmethod
     def get_hostnames():
@@ -138,8 +138,8 @@ class Vimeo(OnlineVideo):
 
 
 if __name__ == '__main__':
-    ov = OnlineVideo(url='https://vimeo.com/groups/animation/videos/150618894/')
+    ov = OnlineContent(url='https://vimeo.com/groups/animation/videos/150618894/')
 
-    print ov.get_video_id()
+    print ov.get_content_uid()
     print ov.check_if_alive()
     print ov.get_embed_code()
