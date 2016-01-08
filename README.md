@@ -1,7 +1,21 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://kmonsoor.mit-license.org/)
 
-# extract-video-id
-Extract Video ID from a video url and provides different codes from there.
+# embedX
+
+Generate embeddable HTML or JavaScript code for a online content from its URL in 1-step. 
+
+The content can be:
+ * Yotube video
+ * Twitter status
+ * Vimeo video
+ * 
+ 
+This can be simple like this: 
+
+>>> from online_video import OnlineVideo
+>>> ov = OnlineVideo('http://www.youtube.com/embed/_lOT2p_FCvA')
+
+>>>
 
 ### Currently, supports
 
