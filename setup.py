@@ -3,14 +3,14 @@ from setuptools import setup, find_packages
 README = open('README.md')
 
 setup(
-        name='extract-video-id',
+        name='embedX',
         version='0.0.3',
         packages=find_packages(),
-        url='https://github.com/kmonsoor/extract-video-id',
+        url='https://github.com/kmonsoor/embedX',
         license='MIT',
         author='Khaled Monsoor',
         author_email='k@kmonsoor.com',
-        description='Library to extract video id from link and embedding',
+        description='Generate embeddable HTML or JavaScript code for a online content from its URL in 1-step',
         long_description=README,
         platforms='any',
         install_requires=[],
