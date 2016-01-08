@@ -16,7 +16,7 @@ class OnlineContent(object):
         # URL-specific dispatching to `provider` objects e.g. Youtube, Vimeo etc.
         for provider_obj in self.__class__.__subclasses__():
             _hosts = provider_obj.get_hostnames()
-            if any([x for x in _hosts if x in url]):
+            if any( x for x in _hosts if x in url):
                 self.instance = provider_obj(self.url)
                 self.content_uid = self.get_content_uid()
 
