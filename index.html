@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Embedx by kmonsoor</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/kmonsoor/embedX">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/kmonsoor/embedX/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/kmonsoor/embedX/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Embedx</h1>
+          <p>Generate simple, responsive, embeddable code from an online-content&#39;s URL</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/kmonsoor">kmonsoor</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="embedx" class="anchor" href="#embedx" aria-hidden="true"><span class="octicon octicon-link"></span></a>embedX</h1>
+
+<p>Generate embeddable HTML or JavaScript code for a online content from its URL in 1-step. </p>
+
+<p>The content can be:</p>
+
+<ul>
+<li>Yotube video</li>
+<li>Twitter status</li>
+<li>Vimeo video</li>
+<li>
+</ul>
+
+<p>This can be simple like this: </p>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from online_video import OnlineVideo
+ov = OnlineVideo('<a href="http://www.youtube.com/embed/_lOT2p_FCvA">http://www.youtube.com/embed/_lOT2p_FCvA</a>')</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+<h3>
+<a id="currently-supports" class="anchor" href="#currently-supports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Currently, supports</h3>
+
+<ul>
+<li>Youtube</li>
+<li>Vimeo</li>
+</ul>
+
+<h3>
+<a id="examples-of-urls" class="anchor" href="#examples-of-urls" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples of URLs</h3>
+
+<h4>
+<a id="valid" class="anchor" href="#valid" aria-hidden="true"><span class="octicon octicon-link"></span></a>Valid</h4>
+
+<ul>
+<li> '<a href="http://youtu.be/_lOT2p_FCvA">http://youtu.be/_lOT2p_FCvA</a>',</li>
+<li> 'www.youtube.com/watch?v=_lOT2p_FCvA&amp;feature=feedu',</li>
+<li> '<a href="http://www.youtube.com/embed/_lOT2p_FCvA">http://www.youtube.com/embed/_lOT2p_FCvA</a>',</li>
+<li> '<a href="http://www.youtube.com/v/_lOT2p_FCvA?version=3&amp;amp;hl=en_US">http://www.youtube.com/v/_lOT2p_FCvA?version=3&amp;amp;hl=en_US</a>',</li>
+<li> '<a href="https://www.youtube.com/watch?v=rTHlyTphWP0&amp;index=6&amp;list=PLjeDyYvG6-40qawYNR4juzvSOg-ezZ2a6">https://www.youtube.com/watch?v=rTHlyTphWP0&amp;index=6&amp;list=PLjeDyYvG6-40qawYNR4juzvSOg-ezZ2a6</a>',</li>
+<li> 'youtube.com/watch?v=_lOT2p_FCvA',</li>
+<li> '<a href="https://vimeo.com/groups/animation/videos/150618894/">https://vimeo.com/groups/animation/videos/150618894/</a>'</li>
+<li> '<a href="https://vimeo.com/150519302">https://vimeo.com/150519302</a>'</li>
+<li> etc.</li>
+</ul>
+
+<h4>
+<a id="invalid" class="anchor" href="#invalid" aria-hidden="true"><span class="octicon octicon-link"></span></a>Invalid:</h4>
+
+<ul>
+<li>'youtu.be/watch?v=_lOT2p_FCvA'  [ because Youtube don't give any url like this ]</li>
+</ul>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<h3>
+<a id="directly-from-source" class="anchor" href="#directly-from-source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directly from source</h3>
+
+<pre><code>pip install git+https://github.com/kmonsoor/embedX.git
+</code></pre>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<pre><code>&gt;&gt;&gt; from online_video import OnlineVideo
+&gt;&gt;&gt; ov = OnlineVideo('http://www.youtube.com/embed/_lOT2p_FCvA')
+&gt;&gt;&gt; ov.get_video_id()
+'_lOT2p_FCvA'
+
+&gt;&gt;&gt; ov.get_embed_code()
+"&lt;div class='embed-container'&gt;&lt;iframe src='http://www.youtube.com/embed/_lOT2p_FCvA' 'frameborder='0'allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;"
+
+&gt;&gt;&gt; ov = OnlineVideo('https://vimeo.com/groups/animation/videos/150618894/')
+&gt;&gt;&gt; ov.get_embed_code()
+"&lt;div class='embed-container'&gt; &lt;iframe src='http://player.vimeo.com/video/150618894' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen&gt;&lt;/iframe&gt;&lt;/div&gt;"
+</code></pre>
+
+<h2>
+<a id="to-do" class="anchor" href="#to-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>To-do</h2>
+
+<ul>
+<li>Create test</li>
+<li>Provision Travis-CI for automatic building &amp; testing</li>
+<li>
+</ul>
+
+<h2>
+<a id="contributors" class="anchor" href="#contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h2>
+
+<ul>
+<li>Seed idea :  <a href="http://stackoverflow.com/a/7936523">A StackOverflow answer</a> by <a href="http://stackoverflow.com/users/85739/mikhail-kashkin">Mikhail Kashkin</a>
+</li>
+<li>Author : <a href="http://github.com/kmonsoor">Khaled Monsoor</a>
+</li>
+<li>
+</ul>
+
+<p>Please try to contribute by submitting more video sites as well as their different link formats. You can submit pull-requests or by creating issue.</p>
+
+<p><a href="http://kmonsoor.mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a></p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-71864659-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
