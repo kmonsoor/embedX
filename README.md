@@ -1,5 +1,6 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://kmonsoor.mit-license.org/)
 [![PyPI version](https://badge.fury.io/py/embedX.svg)](https://badge.fury.io/py/embedX)
+[![Code Issues](https://www.quantifiedcode.com/api/v1/project/69f2bf7e3b404e6c90015053e48a1cbf/badge.svg)](https://www.quantifiedcode.com/app/project/69f2bf7e3b404e6c90015053e48a1cbf)
 
 # embedX
 
