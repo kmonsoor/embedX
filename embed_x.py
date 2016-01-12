@@ -11,6 +11,10 @@ class OnlineContent(object):
     STATUS_LINK = ""
 
     def __init__(self, url):
+        # without protocol name, `urlparse` may not parse, so ...
+        if not url.startswith('http'):
+            url = 'http://' + url
+
         # URL-specific dispatching to `provider` objects e.g. Youtube, Twitter etc.
         for provider_obj in self.__class__.__subclasses__():
             _hosts = provider_obj.hostnames
@@ -79,21 +83,6 @@ class YouTube(OnlineContent):
         self.url = url
 
     def extract_id(self):
-        """Returns content_uid extracting from the given url of Youtube
-
-        Examples of URLs:
-          Valid:
-          'http://youtu.be/_lOT2p_FCvA',
-          'www.youtube.com/watch?v=_lOT2p_FCvA&feature=feedu',
-          'http://www.youtube.com/embed/_lOT2p_FCvA',
-          'http://www.youtube.com/v/_lOT2p_FCvA?version=3&amp;hl=en_US',
-          'https://www.youtube.com/watch?v=rTHlyTphWP0&index=6&'\
-                          list=PLjeDyYvG6-40qawYNR4juzvSOg-ezZ2a6',
-          'youtube.com/watch?v=_lOT2p_FCvA',
-
-          Invalid:
-          'youtu.be/watch?v=_lOT2p_FCvA',
-        """
 
         if self.url.startswith(('youtu', 'www')):
             self.url = 'http://' + self.url

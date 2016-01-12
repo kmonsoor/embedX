@@ -10,7 +10,7 @@ setup(
         license='MIT',
         author='Khaled Monsoor',
         author_email='k@kmonsoor.com',
-        description='Generate embeddable HTML or JavaScript code for a online content from its URL in 1-step',
+        description='Generate embeddable HTML or JavaScript code for a online content from its URL in single step',
         long_description=README,
         platforms='any',
         install_requires=[],
