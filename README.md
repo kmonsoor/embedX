@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://kmonsoor.mit-license.org/)
+[![PyPI version](https://badge.fury.io/py/embedX.svg)](https://badge.fury.io/py/embedX)
 
 # embedX
 
