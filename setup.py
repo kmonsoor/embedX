@@ -10,7 +10,7 @@ except(IOError, ImportError):
     long_description = open('README.md').read()
 
 setup(
-        name='embedX',
+        name='embedx',
         version=__version__,
         packages=find_packages(),
         url=__source_url__,
