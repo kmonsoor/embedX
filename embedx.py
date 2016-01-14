@@ -1,14 +1,43 @@
 from urlparse import urlparse, parse_qs
 
+"""
+Generate responsive, embeddable HTML/JS code from URL of online content
+"""
+__version__ = '0.0.4'
+__author__ = 'Khaled Monsoor'
+__author_email__ = 'k@kmonsoor.com'
+__license__ = 'MIT'
+__source_url__ = 'https://github.com/kmonsoor/embedX'
+__short_desc__ = 'Generate responsive, embeddable HTML/JS code from URL of online content'
+
 
 class OnlineContent(object):
+    """
+    Object to represent a single content on Internet which can be accessed through a link.
+    After initiating the `OnlineContent` object using its URL, embeddable code can be generated.
+    Embeddable code generation is offline, by default.
+    However, by using oEmbed protocol, it can be generated from the host site using its own API.
+
+    >>> from embedx import OnlineContent
+    >>> content = OnlineContent('http://www.youtube.com/watch?v=_lOT2p_FCvA')
+    >>> content.extract_id()
+    '_lOT2p_FCvA'
+    >>> content.get_embed_code()
+    "<div class='embed-container'><iframe src='http://www.youtube.com/embed/_lOT2p_FCvA' 'frameborder='0'allowfullscreen></iframe></div>"
+
+    >>> content = OnlineContent('https://twitter.com/codinghorror/status/686254714938200064')
+    >>> content.extract_id()
+    '686254714938200064'
+    >>> content.get_embed_code()
+
+    """
     instance = None
 
     # these templates must be defined by providing subclasses
     hostnames = []
     EMBED_SCRIPT = ""
-    LINK_TEMPLATE = ""
-    STATUS_LINK = ""
+    STATUS_LINK = ""  # it is needed for hosts which generate HTTP:200 even if CONTENT_ID is invalid e.g. Youtube
+    LINK_TEMPLATE = ""  # not used. yet
 
     def __init__(self, url):
         # without protocol name, `urlparse` may not parse, so ...
@@ -32,6 +61,8 @@ class OnlineContent(object):
     def get_embed_code(self):
         if len(self.instance.EMBED_SCRIPT):
             return self.instance.EMBED_SCRIPT % ({'content_uid': self.get_content_uid()})
+        elif len(self.instance.OEMBED_LINK):
+            oembed_req_url = self.instance.EMBED_SCRIPT % ({'URL': self.instance.url})
         else:
             raise NotImplementedError
 
@@ -122,8 +153,6 @@ class Vimeo(OnlineContent):
 class Twitter(OnlineContent):
     hostnames = ['twitter', ]
 
-    LINK_TEMPLATE = ""
-    STATUS_LINK = ""
     EMBED_SCRIPT = ("<div id='embedx-twt' align='center'></div>"
                     "<script async src='https://platform.twitter.com/widgets.js'></script>"
                     "<script> window.onload=(function(){twttr.widgets.createTweet(%(content_uid)s,"
@@ -132,10 +161,6 @@ class Twitter(OnlineContent):
     def __init__(self, url):
         self.url = url
 
-    @staticmethod
-    def get_hostnames():
-        return ['twitter', ]
-
     def extract_id(self):
         if '/status/' not in self.url:
             raise NotImplementedError
@@ -143,12 +168,29 @@ class Twitter(OnlineContent):
             return urlparse(self.url).path.split('/')[3]
 
 
+class Github(OnlineContent):
+    """
+    Generate embed script for Github gist
+    """
+    hostnames = ['github', ]
+
+    EMBED_SCRIPT = "<script src='https://gist.github.com/%(content_uid)s.js'></script>"
+
+    def __init__(self, url):
+        self.url = url
+
+    def extract_id(self):
+        if 'gist.' not in self.url:
+            raise NotImplementedError
+        else:
+            return urlparse(self.url).path.split('/')[2]
+
+
 class Flickr(OnlineContent):
     hostnames = ['flickr', ]
 
-    LINK_TEMPLATE = ""
-    STATUS_LINK = ""
-    EMBED_SCRIPT = ""
+    # EMBED_SCRIPT = ""
+    OEMBED_LINK = "https://www.flickr.com/services/oembed/?url=%(URL)s&format=json"
 
     def extract_id(self):
         raise NotImplementedError
@@ -157,7 +199,6 @@ class Flickr(OnlineContent):
 class Facebook(OnlineContent):
     hostnames = ['facebook', 'fb.com']
 
-    LINK_TEMPLATE = ""
     STATUS_LINK = ""
     EMBED_SCRIPT = ""
 
