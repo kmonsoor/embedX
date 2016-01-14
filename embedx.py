@@ -29,8 +29,11 @@ class OnlineContent(object):
     >>> content.extract_id()
     '686254714938200064'
     >>> content.get_embed_code()
+    "<div id='embedx-twt' align='center'></div><script async src='https://platform.twitter.com/widgets.js'></script><script> window.onload=(function(){twttr.widgets.createTweet(686254714938200064, document.getElementById('embedx-twt'),{});});</script>"
 
     """
+
+    # pointer to current `OnlineContent` object
     instance = None
 
     # these templates must be defined by providing subclasses
@@ -114,6 +117,8 @@ class YouTube(OnlineContent):
         self.url = url
 
     def extract_id(self):
+        if '/channel/' in self.url:
+            raise NotImplementedError
 
         if self.url.startswith(('youtu', 'www')):
             self.url = 'http://' + self.url
@@ -124,6 +129,8 @@ class YouTube(OnlineContent):
                 return parse_qs(parsed_url.query)['v'][0]
             elif parsed_url.path.startswith(('/embed/', '/v/')):
                 return parsed_url.path.split('/')[2]
+            else:
+                raise NotImplementedError
         elif 'youtu.be' in parsed_url.hostname:
             return parsed_url.path[1:]
         else:
