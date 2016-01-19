@@ -1,4 +1,4 @@
-include *.py *.md *.rst *.txt LICENSE tox.ini .travis.yml
+include *.py *.md
 include LICENSE
 
-global-exclude *.py[cdo] __pycache__ *.so .DS_Store
+global-exclude *.pyc
