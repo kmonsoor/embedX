@@ -32,8 +32,7 @@ setup(
             'Intended Audience :: Developers',
             'Operating System :: OS Independent',
             'License :: OSI Approved :: MIT License',
-            'Topic :: Utilities'
-            'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-            'Topic :: Software Development :: Libraries :: Python Modules'
+            'Topic :: Utilities',
+            'Topic :: Software Development :: Libraries :: Python Modules',
         ],
 )
