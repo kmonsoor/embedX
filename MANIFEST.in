@@ -1,4 +1,6 @@
-include *.py *.md
+graft embedx
+include *.py
+include *.md
 include LICENSE
 
 global-exclude *.pyc

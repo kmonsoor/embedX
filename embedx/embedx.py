@@ -3,12 +3,6 @@ from urlparse import urlparse, parse_qs
 """
 Generate responsive, embeddable HTML/JS code from URL of online content
 """
-__version__ = '0.0.4'
-__author__ = 'Khaled Monsoor'
-__author_email__ = 'k@kmonsoor.com'
-__license__ = 'MIT'
-__source_url__ = 'https://github.com/kmonsoor/embedX'
-__short_desc__ = 'Generate responsive, embeddable HTML/JS code from URL of online content'
 
 
 class OnlineContent(object):

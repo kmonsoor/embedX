@@ -1,26 +1,28 @@
-from setuptools import setup
+from setuptools import setup, find_packages
+from codecs import open
+from os import path
 
-from embedx import __version__, __author__, __author_email__, __license__, __short_desc__, __source_url__
-
+# Load the README.md to `long_description`
+here = path.abspath(path.dirname(__file__))
 try:
-    import pypandoc
-
-    long_description = pypandoc.convert('README.md', 'rst')
-except(IOError, ImportError):
-    long_description = open('README.md').read()
+    from pypandoc import convert
+    long_description = convert('README.md', 'rst')
+except(OSError, IOError, ImportError):
+    with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+        long_description = f.read()
 
 setup(
         name='embedx',
-        packages=['embedx', ],
-        version=__version__,
-        url=__source_url__,
-        license=__license__,
-        author=__author__,
-        author_email=__author_email__,
-        description=__short_desc__,
-        long_description=long_description,
+        packages=find_packages(),
+        version='0.0.4',
+        url='https://github.com/kmonsoor/embedX',
+        license='MIT',
+        author='Khaled Monsoor',
+        author_email='k@kmonsoor.com',
+        description='Generate responsive, embeddable HTML/JS code from URL of online content',
         keywords=['embed', 'html', 'javascript', 'embeddable', 'code generation', 'from url'],
         platforms='any',
+        long_description=long_description,
         install_requires=[],
         classifiers=[
             'Development Status :: 3 - Alpha',
