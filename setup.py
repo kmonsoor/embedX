@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 from embedx import __version__, __author__, __author_email__, __license__, __short_desc__, __source_url__
 
@@ -11,8 +11,8 @@ except(IOError, ImportError):
 
 setup(
         name='embedx',
+        packages=['embedx', ],
         version=__version__,
-        packages=find_packages(),
         url=__source_url__,
         license=__license__,
         author=__author__,
