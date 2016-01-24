@@ -156,7 +156,7 @@ class Twitter(OnlineContent):
 
     EMBED_SCRIPT = ("<div id='embedx-twt' align='center'></div>"
                     "<script async src='https://platform.twitter.com/widgets.js'></script>"
-                    "<script> window.onload=(function(){twttr.widgets.createTweet(%(content_uid)s,"
+                    "<script> window.onload=(function(){twttr.widgets.createTweet('%(content_uid)s',"
                     " document.getElementById('embedx-twt'),{});});</script>")
 
     def __init__(self, url):
