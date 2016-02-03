@@ -1,11 +1,13 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Generate responsive, embeddable HTML/JS code from URL of online content
+"""
+
 try:
     from urlparse import urlparse, parse_qs
 except ImportError:
     from urllib.parse import urlparse, parse_qs
-
-"""
-Generate responsive, embeddable HTML/JS code from URL of online content
-"""
 
 
 class OnlineContent(object):
