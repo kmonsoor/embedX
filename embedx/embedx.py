@@ -1,4 +1,7 @@
-from urlparse import urlparse, parse_qs
+try:
+    from urlparse import urlparse, parse_qs
+except ImportError:
+    from urllib.parse import urlparse, parse_qs
 
 """
 Generate responsive, embeddable HTML/JS code from URL of online content
@@ -81,7 +84,11 @@ class OnlineContent(object):
         This method is `lazy`-evaluated or only executes when called.
         :rtype: bool
         """
-        from urllib2 import urlopen, URLError, HTTPError
+
+        try:
+            from urllib2 import urlopen, URLError, HTTPError
+        except ImportError:
+            from urllib.request import urlopen, URLError, HTTPError
 
         if len(self.instance.STATUS_LINK):
             check_url = self.instance.STATUS_LINK % ({'content_uid': self.get_content_uid()})
@@ -217,8 +224,8 @@ if __name__ == '__main__':
     for a_url in test_urls:
         try:
             ov = OnlineContent(a_url)
-            print ov.get_content_uid()
+            print(ov.get_content_uid())
             # print ov.check_if_alive()
-            print ov.get_embed_code()
+            print(ov.get_embed_code())
         except NotImplementedError:
             pass
