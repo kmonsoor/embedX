@@ -15,27 +15,23 @@ class OnlineContent(object):
     Object to represent a single content on Internet which can be accessed through a link.
     After initiating the `OnlineContent` object using its URL, embeddable code can be generated.
     Embeddable code generation is offline, by default.
-    However, by using oEmbed protocol, it can be generated from the host site using its own API.
+
+    However, by using oEmbed protocol, it can be generated from the host site using its own API. (Experimental)
+    In some cases, e.g. Flickr images, embed code must be generated online.
 
     >>> from embedx import OnlineContent
     >>> content = OnlineContent('http://www.youtube.com/watch?v=_lOT2p_FCvA')
-    >>> content.extract_id()
+    >>> content.get_content_uid()
     '_lOT2p_FCvA'
     >>> content.get_embed_code()
-    "<div class='embed-container'><iframe src='http://www.youtube.com/embed/_lOT2p_FCvA' 'frameborder='0'allowfullscreen></iframe></div>"
-
-    >>> content = OnlineContent('https://twitter.com/codinghorror/status/686254714938200064')
-    >>> content.extract_id()
-    '686254714938200064'
-    >>> content.get_embed_code()
-    "<div id='embedx-twt' align='center'></div><script async src='https://platform.twitter.com/widgets.js'></script><script> window.onload=(function(){twttr.widgets.createTweet(686254714938200064, document.getElementById('embedx-twt'),{});});</script>"
-
-    """
+    "<div class='embedx-yt'><iframe src='http://www.youtube.com/embed/_lOT2p_FCvA' 'frameborder='0' allowfullscreen></iframe></div>"
+    >>> content.check_if_alive()
+    True
+   """
 
     # pointer to current `OnlineContent` object
     instance = None
-
-    # these templates must be defined by providing subclasses
+    # these templates must be defined by implementor subclasses
     hostnames = []
     EMBED_SCRIPT = ""
     STATUS_LINK = ""  # it is needed for hosts which generate HTTP:200 even if CONTENT_ID is invalid e.g. Youtube
@@ -65,6 +61,7 @@ class OnlineContent(object):
             return self.instance.EMBED_SCRIPT % ({'content_uid': self.get_content_uid()})
         elif len(self.instance.OEMBED_LINK):
             oembed_req_url = self.instance.EMBED_SCRIPT % ({'URL': self.instance.url})
+            return oembed_req_url
         else:
             raise NotImplementedError
 
@@ -109,10 +106,16 @@ class OnlineContent(object):
 
 
 class YouTube(OnlineContent):
+    """ Use `OnlineContent` object to instatiate or use this class
+
+    >>> from embedx import OnlineContent
+    >>> content = OnlineContent('http://www.youtube.com/watch?v=_lOT2p_FCvA')
+    >>> content.get_content_uid()
+    '_lOT2p_FCvA'
+    """
+
     hostnames = ['youtube', 'youtu.be']
-    EMBED_SCRIPT = ("<div class='embedx-yt'>"
-                    "<iframe src='http://www.youtube.com/embed/%(content_uid)s' 'frameborder='0' allowfullscreen>"
-                    "</iframe></div>")
+    EMBED_SCRIPT = '''<iframe id="embedx-yt" type="text/html" width="640" height="390" position="center" src="http://www.youtube.com/embed/%(content_uid)s" frameborder="0"/>'''
     STATUS_LINK = '''http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%(content_uid)s&format=json'''
     LINK_TEMPLATE = '''https://www.youtube.com/watch?v=%(content_uid)s'''
 
@@ -137,10 +140,17 @@ class YouTube(OnlineContent):
         elif 'youtu.be' in parsed_url.hostname:
             return parsed_url.path[1:]
         else:
-            raise ValueError
+            raise ValueError("Invalid URL for a Youtube video")
 
 
 class Vimeo(OnlineContent):
+    """Use `OnlineContent` object to instatiate or use this class
+
+    >>> from embedx import OnlineContent
+    >>> vimeo = OnlineContent('https://vimeo.com/92129360')
+    >>> vimeo.get_embed_code()
+    "<div class='embedx-vm'><iframe src='http://player.vimeo.com/video/92129360' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>"
+    """
     hostnames = ['vimeo', ]
 
     LINK_TEMPLATE = '''https://vimeo.com/%(content_uid)s'''
@@ -161,8 +171,16 @@ class Vimeo(OnlineContent):
 
 
 class Twitter(OnlineContent):
-    hostnames = ['twitter', ]
+    """Use `OnlineContent` object to instatiate or use this class
 
+    >>> from embedx import OnlineContent
+    >>> twit = OnlineContent('https://twitter.com/jack/status/20')
+    >>> twit.get_embed_code()
+    "<div id='embedx-twt' align='center'></div><script async src='https://platform.twitter.com/widgets.js'></script><script> window.onload=(function(){twttr.widgets.createTweet('20', document.getElementById('embedx-twt'),{});});</script>"
+
+    """
+
+    hostnames = ['twitter', ]
     EMBED_SCRIPT = ("<div id='embedx-twt' align='center'></div>"
                     "<script async src='https://platform.twitter.com/widgets.js'></script>"
                     "<script> window.onload=(function(){twttr.widgets.createTweet('%(content_uid)s',"
@@ -179,11 +197,15 @@ class Twitter(OnlineContent):
 
 
 class Github(OnlineContent):
-    """
-    Generate embed script for Github gist
-    """
-    hostnames = ['github', ]
+    """Use `OnlineContent` object to instatiate or use this class
 
+    >>> from embedx import OnlineContent
+    >>> gist = OnlineContent('https://gist.github.com/kmonsoor/2a1afba4ee127cce50a0')
+    >>> gist.get_embed_code()
+    "<script src='https://gist.github.com/2a1afba4ee127cce50a0.js'></script>"
+    """
+
+    hostnames = ['github', ]
     EMBED_SCRIPT = "<script src='https://gist.github.com/%(content_uid)s.js'></script>"
 
     def __init__(self, url):
@@ -199,7 +221,6 @@ class Github(OnlineContent):
 class Flickr(OnlineContent):
     hostnames = ['flickr', ]
 
-    # EMBED_SCRIPT = ""
     OEMBED_LINK = "https://www.flickr.com/services/oembed/?url=%(URL)s&format=json"
 
     def extract_id(self):
@@ -216,6 +237,7 @@ class Facebook(OnlineContent):
         raise NotImplementedError
 
 
+# for quick overview testing
 if __name__ == '__main__':
     test_urls = ['https://twitter.com/thepodcastdude/status/686258030229336064',
                  'youtube.com/watch?v=_lOT2p_FCvA',
@@ -227,7 +249,7 @@ if __name__ == '__main__':
         try:
             ov = OnlineContent(a_url)
             print(ov.get_content_uid())
-            # print ov.check_if_alive()
+            # print(ov.check_if_alive())
             print(ov.get_embed_code())
         except NotImplementedError:
             pass
