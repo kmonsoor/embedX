@@ -8,9 +8,9 @@ Generate embeddable HTML or JavaScript code for a online content from its URL in
 
 The content can be anything like 
 
- * Yotube video
- * Twitter status
- * Flickr image
+ * Youtube or Vimeo video,
+ * Twitter status,
+ * Github Gist,
  etc.
 
 
@@ -40,7 +40,6 @@ Embeddable code-generation be simple like this:
  *  http://youtu.be/_lOT2p_FCvA
  *  www.youtube.com/watch?v=_lOT2p_FCvA&feature=feedu
  *  http://www.youtube.com/embed/_lOT2p_FCvA
- *  http://www.youtube.com/v/_lOT2p_FCvA?version=3&amp;hl=en_US
  *  https://www.youtube.com/watch?v=rTHlyTphWP0&index=6&list=PLjeDyYvG6-40qawYNR4juzvSOg-ezZ2a6
  *  youtube.com/watch?v=_lOT2p_FCvA
  *  https://vimeo.com/groups/animation/videos/150618894/
@@ -66,6 +65,9 @@ Embeddable code-generation be simple like this:
 
     pip install git+https://github.com/kmonsoor/embedX.git
 
+## Requirements
+    
+    This library don't have any external dependencies other than standard Python installation.
 
 
 ## Usage
