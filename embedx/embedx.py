@@ -24,7 +24,7 @@ class OnlineContent(object):
     >>> content.get_content_uid()
     '_lOT2p_FCvA'
     >>> content.get_embed_code()
-    "<div class='embedx-yt'><iframe src='http://www.youtube.com/embed/_lOT2p_FCvA' 'frameborder='0' allowfullscreen></iframe></div>"
+    '<iframe id="embedx-yt" type="text/html" width="640" height="390" position="center" src="http://www.youtube.com/embed/_lOT2p_FCvA" frameborder="0"/>'
     >>> content.check_if_alive()
     True
    """
