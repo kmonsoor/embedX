@@ -24,7 +24,7 @@ class OnlineContent(object):
     >>> content.get_content_uid()
     '_lOT2p_FCvA'
     >>> content.get_embed_code()
-    '<iframe id="embedx-yt" type="text/html" width="640" height="390" position="center" src="http://www.youtube.com/embed/_lOT2p_FCvA" frameborder="0"/>'
+    '<iframe id="embedx-yt" type="text/html" width="640" height="390" position="center" src="http://www.youtube.com/embed/_lOT2p_FCvA" frameborder="0"></iframe>'
     >>> content.check_if_alive()
     True
    """
@@ -115,7 +115,7 @@ class YouTube(OnlineContent):
     """
 
     hostnames = ['youtube', 'youtu.be']
-    EMBED_SCRIPT = '''<iframe id="embedx-yt" type="text/html" width="640" height="390" position="center" src="http://www.youtube.com/embed/%(content_uid)s" frameborder="0"/>'''
+    EMBED_SCRIPT = '''<iframe id="embedx-yt" type="text/html" width="640" height="390" position="center" src="http://www.youtube.com/embed/%(content_uid)s" frameborder="0"></iframe>'''
     STATUS_LINK = '''http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%(content_uid)s&format=json'''
     LINK_TEMPLATE = '''https://www.youtube.com/watch?v=%(content_uid)s'''
 
