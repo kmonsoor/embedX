@@ -1,0 +1,8 @@
+title: Embedx
+description: Generate simple, responsive, embeddable code from an online-content's URL
+google_analytics: UA-71864659-1
+show_downloads: true
+theme: jekyll-theme-dinky
+
+gems:
+  - jekyll-mentions
