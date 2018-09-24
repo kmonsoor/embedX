@@ -20,11 +20,11 @@ class OnlineContent(object):
     In some cases, e.g. Flickr images, embed code must be generated online.
 
     >>> from embedx import OnlineContent
-    >>> content = OnlineContent('http://www.youtube.com/watch?v=_lOT2p_FCvA')
+    >>> content = OnlineContent('https://www.youtube.com/watch?v=_lOT2p_FCvA')
     >>> content.get_content_uid()
     '_lOT2p_FCvA'
     >>> content.get_embed_code()
-    '<iframe id="embedx-yt" type="text/html" width="640" height="390" position="center" src="http://www.youtube.com/embed/_lOT2p_FCvA" frameborder="0"></iframe>'
+    '<iframe id="embedx-yt" type="text/html" width="640" height="390" position="center" src="https://www.youtube.com/embed/_lOT2p_FCvA" frameborder="0"></iframe>'
     >>> content.check_if_alive()
     True
    """
@@ -40,7 +40,7 @@ class OnlineContent(object):
     def __init__(self, url):
         # without protocol name, `urlparse` may not parse, so ...
         if not url.startswith('http'):
-            url = 'http://' + url
+            url = 'https://' + url
 
         # URL-specific dispatching to `provider` objects e.g. Youtube, Twitter etc.
         for provider_obj in self.__class__.__subclasses__():
@@ -109,14 +109,14 @@ class YouTube(OnlineContent):
     """ Use `OnlineContent` object to instatiate or use this class
 
     >>> from embedx import OnlineContent
-    >>> content = OnlineContent('http://www.youtube.com/watch?v=_lOT2p_FCvA')
+    >>> content = OnlineContent('https://www.youtube.com/watch?v=_lOT2p_FCvA')
     >>> content.get_content_uid()
     '_lOT2p_FCvA'
     """
 
     hostnames = ['youtube', 'youtu.be']
-    EMBED_SCRIPT = '''<iframe id="embedx-yt" type="text/html" width="640" height="390" position="center" src="http://www.youtube.com/embed/%(content_uid)s" frameborder="0"></iframe>'''
-    STATUS_LINK = '''http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=%(content_uid)s&format=json'''
+    EMBED_SCRIPT = '''<iframe id="embedx-yt" type="text/html" width="640" height="390" position="center" src="https://www.youtube.com/embed/%(content_uid)s" frameborder="0"></iframe>'''
+    STATUS_LINK = '''https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=%(content_uid)s&format=json'''
     LINK_TEMPLATE = '''https://www.youtube.com/watch?v=%(content_uid)s'''
 
     def __init__(self, url):
@@ -127,7 +127,7 @@ class YouTube(OnlineContent):
             raise NotImplementedError
 
         if self.url.startswith(('youtu', 'www')):
-            self.url = 'http://' + self.url
+            self.url = 'https://' + self.url
         parsed_url = urlparse(self.url)
 
         if 'youtube' in parsed_url.hostname:
@@ -149,14 +149,14 @@ class Vimeo(OnlineContent):
     >>> from embedx import OnlineContent
     >>> vimeo = OnlineContent('https://vimeo.com/92129360')
     >>> vimeo.get_embed_code()
-    "<div class='embedx-vm'><iframe src='http://player.vimeo.com/video/92129360' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>"
+    "<div class='embedx-vm'><iframe src='https://player.vimeo.com/video/92129360' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>"
     """
     hostnames = ['vimeo', ]
 
     LINK_TEMPLATE = '''https://vimeo.com/%(content_uid)s'''
     STATUS_LINK = '''https://vimeo.com/api/oembed.json?url=https://vimeo.com/%(content_uid)s'''
     EMBED_SCRIPT = ("<div class='embedx-vm'>"
-                    "<iframe src='http://player.vimeo.com/video/%(content_uid)s' "
+                    "<iframe src='https://player.vimeo.com/video/%(content_uid)s' "
                     "frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen>"
                     "</iframe></div>")
 
